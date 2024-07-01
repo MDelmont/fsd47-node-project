@@ -1,0 +1,35 @@
+.card{
+    position: relative;
+    width: 400px;
+    height: 150px;
+    border: 1px solid grey;
+    .img-card-cont{
+        position: absolute;
+        top:0px;
+        left: 0px;
+        aspect-ratio: 1 / 1;
+        height: 150px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .info-cont{
+        position: absolute;
+        left: 160px;
+        width: 190;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        align-items: center;
+        padding-top: 3px;
+        .title-cont{
+            display: flex;
+            gap : 4px;
+        }
+        p,h3{
+            margin: 0;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+.card
+    .img-card-cont
+        img(src=user.photo)
+    .info-cont
+        .title-cont
+            h3 #{user.firstname} #{user.lastname}
+            p.secondary (#{utilsData.calculateAge(user.birthdate)} ans)
+        p #{user.email}
+        p #{user.phone}
+        p.secondary Anniversaire #{utilsData.formatBirthday(user.birthdate)}
+        if isAdmin
+            button Éditer 
+            button Suprimer

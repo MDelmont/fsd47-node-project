@@ -1,0 +1,27 @@
+extends ../layouts/frontend
+
+block content
+    .ui.middle.aligned.center.aligned.grid
+        .six.wide.column
+            h1 Connexion
+            if errors && errors.length > 0
+                each error in errors
+                    p.ui.error.message= error
+
+            if sucess && sucess.length > 0
+                each suces in sucess
+                    p.ui.sucess.message= suces
+            form.form_login(method="post", action="/auth/login")
+                .segment
+                    +field('email', 'email', 'your.email@address.tld')
+                    +field('password', 'password', 'Password')
+                    button(type="submit").confirm-button Login
+
+
+
+
+mixin field(type, name, placeholder)
+    .field
+        .ui.left.icon.input
+            i.icon(class=(type === 'password' ? 'lock' : 'user'))
+            input(type=type, name=name, placeholder=placeholder, value=historyData ? historyData[name] : '')
