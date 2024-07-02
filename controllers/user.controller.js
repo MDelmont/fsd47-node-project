@@ -286,11 +286,16 @@ const getDeleteUserControlleur = async (req,res) => {
     res.redirect('/user/all')
   } catch (error) {
     console.log(error)
-    redirect('user/all')
+    redirect('/user/all')
   }
 }
 const getUCreateUserControlleur = async (req,res) =>{
    // faire le rendu du pug
+}
+
+const getListUserControlleur = async (req,res) => {
+  const users = await UserModel.find()
+  res.render("user/list",{users,utilsData})
 }
 
 export default  {
@@ -300,5 +305,6 @@ export default  {
   postUpdateUserControlleur,
   getHome,
   getDeleteUserControlleur,
-  getUCreateUserControlleur
+  getUCreateUserControlleur,
+  getListUserControlleur
 }

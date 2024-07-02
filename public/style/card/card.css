@@ -4,6 +4,13 @@
   height: 150px;
   border: 1px solid grey;
 }
+.card .category {
+  position: absolute;
+  width: 20%;
+  right: 0px;
+  text-align: left;
+  top: 3px;
+}
 .card .img-card-cont {
   position: absolute;
   top: 0px;
@@ -17,13 +24,14 @@
 }
 .card .info-cont {
   position: absolute;
-  left: 160px;
-  width: 190;
-  height: 100%;
+  left: 170px;
+  width: 250px;
+  height: 120px;
+  top: 30px;
   display: flex;
   flex-direction: column;
   gap: 3px;
-  align-items: center;
+  align-items: flex-start;
   padding-top: 3px;
 }
 .card .info-cont .title-cont {

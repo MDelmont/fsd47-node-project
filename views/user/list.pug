@@ -1,0 +1,27 @@
+extends ../layouts/frontend
+
+block content
+    .list-page
+        h1 Liste des collaborateurs
+
+        form(action="", method="get")
+            input(type="text" placeholder="Recherche ..." name="query")
+            label(for="search-by")
+                span Recherche par :
+                select(id="search-by" name="search-by")
+                    option(value="name") Nom
+                    option(value="email") Email
+            label(for="category")
+                span Catégorie :
+                select(id="category" name="category")
+                    option(value="all") Tous
+                    option(value="department1") Département 1
+                    option(value="department2") Département 2
+
+        .list-user
+            each user in users
+                include ./card.pug
+        
+      
+
+

@@ -9,7 +9,7 @@ import isAdminMiddelware from "../middleware/isAdminMiddleware.js";
 
 
 // user.get('/:userIds',authMiddleware,UserController.getUserControlleur)
-// user.get('/all',authMiddleware,UserController.getAllUserControlleur)
+user.get('/list',authMiddleware,UserController.getListUserControlleur)
 
 user.get('/create',authMiddleware,isAdminMiddelware,UserController.getCreateUserControlleur)
 user.post('/create',authMiddleware,isAdminMiddelware,UserController.postCreateUserControlleur)

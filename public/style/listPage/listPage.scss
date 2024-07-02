@@ -1,0 +1,14 @@
+.list-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    .list-user{
+        display: flex;
+        width: 95%;
+        flex-wrap: wrap;
+        gap : 5px;
+        justify-content: center;
+    }
+
+}
