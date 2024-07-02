@@ -6,10 +6,10 @@
 }
 .card .category {
   position: absolute;
-  width: 20%;
   right: 0px;
+  padding-right: 5px;
   text-align: left;
-  top: 3px;
+  top: 1px;
 }
 .card .img-card-cont {
   position: absolute;
@@ -17,6 +17,7 @@
   left: 0px;
   aspect-ratio: 1/1;
   height: 150px;
+  overflow: hidden;
 }
 .card .img-card-cont img {
   width: 100%;
@@ -27,7 +28,7 @@
   left: 170px;
   width: 250px;
   height: 120px;
-  top: 30px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -40,6 +41,10 @@
 }
 .card .info-cont p, .card .info-cont h3 {
   margin: 0;
+}
+.card .info-cont .action {
+  display: flex;
+  gap: 5px;
 }
 
 /*# sourceMappingURL=card.css.map */

@@ -1,18 +1,35 @@
 .card
     .category=user.category
-   
+
     .img-card-cont
         if user && user.photo
             img(src=user.photo)
+
     .info-cont
         .title-cont
             if user
                 h3 #{user.firstname} #{user.lastname}
                 p.secondary (#{utilsData.calculateAge(user.birthdate)} ans)
+
         if user
             p #{user.email}
             p #{user.phone}
             p.secondary Anniversaire #{utilsData.formatBirthday(user.birthdate)}
-            if isAdmin
-                button Éditer 
-                button Suprimer
+
+            .action
+                if session.isAdmin
+                    button(type="button", onclick=`editUser('${user._id}')`) Éditer
+                    button(type="button", onclick=`deleteUser('${user._id}','${user.firstname}','${user.lastname}')`) Supprimer
+                
+block scripts
+    script.
+        function editUser(userId) {
+            const url = `/user/update/${userId}`;
+            window.location.href = url;
+        }
+        function deleteUser(userId, firstname, lastname) {
+            if (confirm(`Êtes-vous sûr de vouloir supprimer ${firstname} ${lastname} ?`)) {
+                const url = `/user/delete/${userId}`;
+                window.location.href = url;
+            }
+        }

@@ -17,7 +17,7 @@ const postLoginController = async (req,res) => {
     for (let field of missingFields){
       req.flash('errors', `Le champs "${field}" est requis.`);
     }
-    return res.render("auth/login", { token: req.session.token, errors: req.flash('errors') });
+    return res.render("auth/login", { session: req.session, errors: req.flash('errors') });
   }
   const {email,password} = req.body
     // Get user with email
@@ -26,7 +26,7 @@ const postLoginController = async (req,res) => {
     if (!user) {
       req.flash('errors', `Email ou mot de passe invalide.`);
    
-      return res.render("auth/login", { token: req.session.token, errors: req.flash('errors') });
+      return res.render("auth/login", { session: req.session, errors: req.flash('errors') });
     }
     // Compare the password
     const valid = await user.comparePassword(password);
@@ -35,7 +35,7 @@ const postLoginController = async (req,res) => {
     if (!valid) {
       req.flash('errors', `Email ou mot de passe invalide.`);
    
-      return res.render("auth/login", { token: req.session.token, errors: req.flash('errors') });
+      return res.render("auth/login", { session: req.session, errors: req.flash('errors') });
     }
     req.session.isAdmin = user.isAdmin
     
@@ -47,14 +47,14 @@ const postLoginController = async (req,res) => {
     )
     // put token in session
     req.session.token = token
-  
+    req.session.activeUser = {_id : user._id, photo: user.photo}
     console.log('succes to login user', user._id)
     return res.redirect('/user/home')
   } catch (error) {
     // redirect to login page with errors
     console.log('error',error);
     req.flash('errors', "Une erreur interne est survenu");
-    return res.render("auth/login", { token: req.session.token,isAdmin:req.session.isAdmin, errors: req.flash('errors') ,historyData:req.body});
+    return res.render("auth/login", { session : req.session, errors: req.flash('errors') ,historyData:req.body});
   }
 }
 
@@ -69,7 +69,7 @@ const getLoginController = async (req,res) => {
     res.redirect('/user/home')
   }
   // redirect to login page
-  res.render("auth/login" ,{ token: req.session.token ,isAdmin:req.session.isAdmin, errors: req.flash('errors'),success: req.flash('success') });
+  res.render("auth/login" ,{ session: req.session, errors: req.flash('errors'),success: req.flash('success') });
 
 }
 

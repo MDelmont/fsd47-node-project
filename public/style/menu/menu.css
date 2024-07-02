@@ -1,7 +1,23 @@
 .menu {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+.menu .item {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  text-decoration: none;
+  font-weight: bolder;
+  color: black;
+}
+.menu .item img {
+  height: 20px;
+}
+.menu .profil img {
+  height: 40px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
 }
 
 /*# sourceMappingURL=menu.css.map */
