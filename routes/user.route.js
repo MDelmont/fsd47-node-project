@@ -13,10 +13,11 @@ import isAdminMiddelware from "../middleware/isAdminMiddleware.js";
 
 user.get('/create',authMiddleware,isAdminMiddelware,UserController.getCreateUserControlleur)
 user.post('/create',authMiddleware,isAdminMiddelware,UserController.postCreateUserControlleur)
-user.get('/home',UserController.getHome)
+user.get('/home',authMiddleware,UserController.getHome)
+user.get('/create', UserController.getUCreateUserControlleur)
 user.get('/update/:userId',authMiddleware,checkScopeUser,UserController.getUpdateUserControlleur)
 user.post('/update/:userId',authMiddleware,checkScopeUser,UserController.postUpdateUserControlleur)
-
+user.get('/delete/:userId',authMiddleware,isAdminMiddelware,UserController.getDeleteUserControlleur)
 
 export default user;
 

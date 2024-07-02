@@ -5,12 +5,13 @@ html(lang="fr")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/style/card/card.css")
+        link(rel="stylesheet", href="/style/menu/menu.css")
         block scripts
 
         title Hello Express Pug App!
     body
 
-        .nav.menu
+        .menu
             if (token)
                 
             if (!token)
@@ -26,7 +27,7 @@ html(lang="fr")
                     | Profil
                 a.item(href="/user/all")
                     i.file.icon
-                    | Profil
+                    | list
                 a.item(href="/auth/logout")
                     i.file.icon
                     | Déconnexion

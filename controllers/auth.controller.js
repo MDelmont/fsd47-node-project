@@ -65,6 +65,9 @@ const postLoginController = async (req,res) => {
  */
 const getLoginController = async (req,res) => {
   console.log(req.session.token)
+  if(req.session.token){
+    res.redirect('/user/home')
+  }
   // redirect to login page
   res.render("auth/login" ,{ token: req.session.token ,isAdmin:req.session.isAdmin, errors: req.flash('errors'),success: req.flash('success') });
 

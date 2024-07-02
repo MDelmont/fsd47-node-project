@@ -278,10 +278,27 @@ const getHome = async (req,res) => {
     return res.render("auth/login", { token: req.session.token, errors: req.flash('errors') });
   }
 }
+
+const getDeleteUserControlleur = async (req,res) => {
+  try{
+    const userId = req.params.userId
+    await UserModel.deleteOne({_id:userId})
+    res.redirect('/user/all')
+  } catch (error) {
+    console.log(error)
+    redirect('user/all')
+  }
+}
+const getUCreateUserControlleur = async (req,res) =>{
+   // faire le rendu du pug
+}
+
 export default  {
   getCreateUserControlleur,
   postCreateUserControlleur,
   getUpdateUserControlleur,
   postUpdateUserControlleur,
   getHome,
+  getDeleteUserControlleur,
+  getUCreateUserControlleur
 }

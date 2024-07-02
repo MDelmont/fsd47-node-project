@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
   if (!token) {
 
     req.flash('errors', "Veuillez vous connecter");
-    return res.render("auth/login", { token: req.session.token, errors: req.flash('errors') });
+    return res.redirect("auth/login");
   }
 
   try {
@@ -32,7 +32,7 @@ const authMiddleware = (req, res, next) => {
     console.error(error)
 
     req.flash('errors', "Veuillez vous connecter");
-    return res.render("auth/login", { token: req.session.token, errors: req.flash('errors') });
+    return res.redirect("auth/login");
   }
 };
 
