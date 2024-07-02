@@ -283,10 +283,10 @@ const getDeleteUserControlleur = async (req,res) => {
   try{
     const userId = req.params.userId
     await UserModel.deleteOne({_id:userId})
-    res.redirect('/user/all')
+    res.redirect('/user/list')
   } catch (error) {
     console.log(error)
-    redirect('/user/all')
+    res.redirect('/user/list')
   }
 }
 const getUCreateUserControlleur = async (req,res) =>{
@@ -294,13 +294,9 @@ const getUCreateUserControlleur = async (req,res) =>{
 }
 
 const getListUserControlleur = async (req,res) => {
-
-
   const {search,searchBy,category} = req.query
-
   let filter = {};
   if (search && searchBy) {
-
     if (searchBy === 'name') {
       filter.$or = [
           { firstname: { $regex: search, $options: 'i' } },
@@ -309,13 +305,12 @@ const getListUserControlleur = async (req,res) => {
     } else {
         filter[searchBy] = { $regex: search, $options: 'i' };
     }
-
   }
   if (category && category !== 'all') {
       filter.category = category;
   }
   const users = await UserModel.find(filter)
-  res.render("user/list",{token: req.session.token,users,utilsData, historyData : {search,searchBy,category}})
+  res.render("user/list",{token: req.session.token,isAdmin:req.session.isAdmin, users,utilsData, historyData : {search,searchBy,category}})
 }
 
 export default  {

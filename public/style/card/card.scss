@@ -5,10 +5,11 @@
     border: 1px solid grey;
     .category{
         position: absolute;
-        width: 20%;
+   
         right: 0px;
+        padding-right: 5px;
         text-align: left;
-        top: 3px;
+        top: 1px;
       
     }
     .img-card-cont{
@@ -17,17 +18,19 @@
         left: 0px;
         aspect-ratio: 1 / 1;
         height: 150px;
+        overflow: hidden;
         img{
             width: 100%;
             height: 100%;
         }
     }
+
     .info-cont{
         position: absolute;
         left: 170px;
         width: 250px;
         height: 120px;
-        top:30px;
+        top:20px;
         
         display: flex;
         flex-direction: column;
@@ -40,6 +43,10 @@
         }
         p,h3{
             margin: 0;
+        }
+        .action{
+            display: flex;
+            gap: 5px;
         }
     }
 }
