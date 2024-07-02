@@ -55,7 +55,7 @@ const checkPasswordCondition = async (password,password2) => {
   const checkCategoryValue = async (category) => {
     let errors = [];
     // Check the category value
-    if (!['marketing', 'client', 'technique'].includes(category)) {
+    if (!['Marketing', 'Client', 'Technique'].includes(category)) {
       errors.push({ msg: "La catégorie doit être Marketing, client ou technique." });
     }
     return errors
@@ -69,7 +69,8 @@ const checkPasswordCondition = async (password,password2) => {
   const checkPhoneFormat = async (phone) => {
     let errors = [];
 
-    const phoneRegex = /^[0-9]{10}$/;
+    const phoneRegex = /^\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/
+
     if (!phoneRegex.test(phone)) {
       errors.push({ msg: "Le numéro de téléphone n'est pas dans un format valide." });
     }

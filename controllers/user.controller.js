@@ -148,15 +148,14 @@ const  postCreateUserControlleur = async (req,res) => {
 const getUpdateUserControlleur = async (req,res) => {
     try {
         const userId = req.params.userId;
-        const user = await UserModel.findById(userId);
+        const user = await UserModel.findOne({_id: userId}).lean();
 
         const formattedUser = {
             ...user,
             birthdate: utilsData.formatDateYYYYMMDD(user.birthdate)
         }
 
-        console.log('formatted user = ', formattedUser);
-        return res.render("user/form", { url: `/user/update/${userId}`, user: formattedUser, title:'Modifier mon profil', btnText:'Modifier', token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
+        return res.render("user/form", { user: formattedUser, title:'Modifier mon profil', token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
 
     } catch (error) {
         console.log(error);
@@ -172,35 +171,41 @@ const getUpdateUserControlleur = async (req,res) => {
  * @returns 
  */
 const  postUpdateUserControlleur = async (req,res) => {
-  try{
     const userId = req.auth.userId
-    const userModify = req.params.userId
+    const userModifyId = req.params.userId
+    const title = 'Modifier mon profil'
+  try{
+
     // check missing fields
-    const requiredFields = [ 'gender','firstname',"lastname","email","password",
-      "password_confirm","phone","birthdate","city","country",
-    "photo","category","isAdmin"];
+    const requiredFields = [ 'gender','firstname',"lastname","email","phone","birthdate","city","country",
+    "photo","category"];
     const missingFields = utilsForm.checkMissingField(req,requiredFields)
+    
     if (missingFields.length > 0) {
-    for (let field of missingFields){
-    req.flash('errors', `Le champs "${field}" est requis.`);
-    }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
+        for (let field of missingFields){
+            req.flash('errors', `Le champs "${field}" est requis.`);
+        }
+
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
     }
 
     let {gender,firstname,lastname,email,password,
-    password_confirm,phone,birthdate,city,country,
+    confirmPassword,phone,birthdate,city,country,
     photo,category,isAdmin} = req.body;
 
     email = email.toLowerCase()
 
-    // check password
-    const errors = await utilsForm.checkPasswordCondition(password,password_confirm)
-    // return error if password condition not pass
-    if (errors.length > 0) {
-    for (let error of errors){
-    req.flash('errors', error.msg);
-    }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
+    if(password) {
+        // check password
+        const errors = await utilsForm.checkPasswordCondition(password,confirmPassword)
+        // return error if password condition not pass
+
+        if (errors.length > 0) {
+        for (let error of errors){
+        req.flash('errors', error.msg);
+        }
+            return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+        }
     }
 
     // check gender
@@ -209,8 +214,8 @@ const  postUpdateUserControlleur = async (req,res) => {
     for (let error of errorsGender){
     req.flash('errors', error.msg);
     }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
-    }
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+}
 
     // check category
     const errorsCategory = await utilsForm.checkCategoryValue(category)
@@ -218,8 +223,8 @@ const  postUpdateUserControlleur = async (req,res) => {
     for (let error of errorsCategory){
     req.flash('errors', error.msg);
     }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
-    }
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+}
 
     // check Phone
     const errorsPhone= await utilsForm.checkPhoneFormat(phone)
@@ -227,8 +232,8 @@ const  postUpdateUserControlleur = async (req,res) => {
     for (let error of errorsPhone){
     req.flash('errors', error.msg);
     }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
-    }
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+}
 
     // check birthdate
     const errorsBirthdate= await utilsForm.checkDateFormat(birthdate)
@@ -236,8 +241,8 @@ const  postUpdateUserControlleur = async (req,res) => {
     for (let error of errorsBirthdate){
     req.flash('errors', error.msg);
     }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors'),informationHistory :req.body });
-    }
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+}
 
     // check photo
     const errorsPhoto= await utilsForm.checkUrlFormat(photo)
@@ -245,16 +250,10 @@ const  postUpdateUserControlleur = async (req,res) => {
     for (let error of errorsPhoto){
     req.flash('errors', error.msg);
     }
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors'),informationHistory :req.body });
-    }
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+}
     const userAuth = await UserModel.findOne({ _id:userId });
     const existingUser = await UserModel.findOne({ email });
-    
-    if(userAuth.isAdmin != true && existingUser._id != userId){
-
-      req.flash('errors', "Modification non autorisée");
-      return res.render("user/create", { token: req.session.token, errors: req.flash('errors'),informationHistory :req.body});
-    }
 
     if (existingUser) {
       // Update user fields with values from req.body
@@ -262,26 +261,27 @@ const  postUpdateUserControlleur = async (req,res) => {
       existingUser.firstname = firstname;
       existingUser.lastname = lastname;
       existingUser.email = email;
-      existingUser.password = password; // Assuming you handle password hashing
+      if(password) existingUser.password = password; // Assuming you handle password hashing
       existingUser.phone = phone;
       existingUser.birthdate = birthdate;
       existingUser.city = city;
       existingUser.country = country;
       existingUser.photo = photo;
       existingUser.category = category;
+
       if ( userAuth.isAdmin ){
         existingUser.isAdmin = isAdmin;   
       }
      
       await existingUser.save();
-      req.flash('succes', "Modification non autorisée");
-      res.render('users/list',{ token: req.session.token, succes: req.flash('errors')})
+      req.flash('success', "Modification réalisée avec succès !");
+      res.render('user/form',{ title, token: req.session.token, success: req.flash('success'), user: {...req.body, _id: userModifyId}})
     }
   }catch (error){
   console.log(error);
     req.flash('errors', "Une erreur interne est survenu");
-    return res.render("user/create", { token: req.session.token, errors: req.flash('errors') });
-  }
+        return res.render(`user/form`, { title, token: req.session.token, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+}
 }
 
 const getHome = async (req,res) => {
