@@ -10,7 +10,7 @@
             if user
                 h3 #{user.firstname} #{user.lastname}
                 p.secondary (#{utilsData.calculateAge(user.birthdate)} ans)
-
+        p= `${user.city}, ${user.country}`
         if user
             p #{user.email}
             p #{user.phone}

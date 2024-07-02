@@ -8,6 +8,7 @@ html(lang="fr")
         link(rel="stylesheet", href="/style/menu/menu.css")
         link(rel="stylesheet", href="/style/listPage/listPage.css")
         link(rel="stylesheet", href="/style/homePage/homePage.css")
+        link(rel="stylesheet", href="/style/formPage/formPage.css")
         block scripts
 
         title Hello Express Pug App!
@@ -15,15 +16,15 @@ html(lang="fr")
 
         .menu 
             if (!session.token)
-                .empty
+                a.item(href="/auth/login")
+                    i.file.icon
+                    img(src="/image/structure.svg", alt="Icone de structure")
+                    | Intranet
                 a.item(href="/auth/login")
                     img(src="/image/login.svg", alt="Icone de connexion")
                     | Connexion
             if (session.token)
                 a.item(href="/home")
-                    i.file.icon
-                    | home
-                a.item(href="/user/all")
                     i.file.icon
                     img(src="/image/structure.svg", alt="Icone de structure")
                     | Intranet

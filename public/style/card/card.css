@@ -1,7 +1,7 @@
 .card {
   position: relative;
   width: 400px;
-  height: 150px;
+  height: 160px;
   border: 1px solid grey;
 }
 .card .category {
@@ -16,7 +16,7 @@
   top: 0px;
   left: 0px;
   aspect-ratio: 1/1;
-  height: 150px;
+  height: 160px;
   overflow: hidden;
 }
 .card .img-card-cont img {
@@ -25,9 +25,9 @@
 }
 .card .info-cont {
   position: absolute;
-  left: 170px;
+  left: 175px;
   width: 250px;
-  height: 120px;
+  height: 150px;
   top: 20px;
   display: flex;
   flex-direction: column;

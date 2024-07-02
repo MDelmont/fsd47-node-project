@@ -319,8 +319,14 @@ const getListUserControlleur = async (req,res) => {
           { firstname: { $regex: search, $options: 'i' } },
           { lastname: { $regex: search, $options: 'i' } }
       ];
+    } else if (searchBy==='localisation'){
+        filter.$or = [
+          { city: { $regex: search, $options: 'i' } },
+          { country: { $regex: search, $options: 'i' } }
+      ];
+        
     } else {
-        filter[searchBy] = { $regex: search, $options: 'i' };
+      filter[searchBy] = { $regex: search, $options: 'i' };
     }
   }
   if (category && category !== 'all') {

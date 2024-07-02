@@ -1,54 +1,55 @@
 extends ../layouts/frontend
 
 block content
-    h1=title
-    if errors && errors.length > 0
-        each error in errors
-            p.ui.error.message= error
+    .form-page
+        h1=title
+        if errors && errors.length > 0
+            each error in errors
+                p.ui.error.message= error
 
-    if success && success.length > 0
-        each succes in success
-            p.ui.success.message= succes
-    form(method="post")
-        label(for='gender')
-            span * Civilité : 
-        select(id='gender' name='gender')
-            option(value='male' selected=user ? user.gender === 'male': false) Homme
-            option(value='female' selected=user ? user.gender === 'female': false) Femme
-        label(for='category')
-            span * Catégorie : 
-        select(id='category', name='category')
-            option(value='Marketing' selected=user ? user.category === 'Marketing' : false) Marketing
-            option(value='Client' selected=user ? user.category === 'Client' : false) Client
-            option(value='Technique' selected=user ? user.category === 'Technique' : false) Technique
-        label(for='lastname')
-            span * Nom :
-        input(type="text" id="lastname" name="lastname" value=user ? user.lastname : '')
-        label(for='firstname')
-            span * Prénom :
-        input(type="text" id="firstname" name="firstname" value=user ? user.firstname : '')
-        label(for='email')
-            span * Email :
-        input(type="email" id="email" name="email" value=user ? user.email : '')
-        label(for='password')
-            span * Mot de passe :
-        input(type="password" id="password" name="password" placeholder='min 6 caractères')
-        label(for='confirmPassword')
-            span * Confirmer le mot de passe :
-        input(type="password" id="confirmPassword" name="confirmPassword" placeholder='min 6 caractères')
-        label(for='phone')
-            span * Téléphone :
-        input(type="text" id="phone" name="phone" value=user ? user.phone : '')
-        label(for='birthdate')
-            span * Date de naissance :
-        input(type="date" id="birthdate" name="birthdate" value=user ? user.birthdate : '')
-        label(for='city')
-            span * Ville :
-        input(type="text" id="city" name="city" value=user ? user.city : '')
-        label(for='country')
-            span * Pays :
-        input(type="text" id="country" name="country" value=user ? user.country : '')
-        label(for='photo')
-            span * Url de la photo :
-        input(type="text" id="photo" name="photo" value=user ? user.photo : '')
-        button(type="submit").confirm-button Envoyer
+        if success && success.length > 0
+            each succes in success
+                p.ui.success.message= succes
+        form(method="post")
+            label(for='gender')
+                span * Civilité : 
+                select(id='gender' name='gender')
+                    option(value='male' selected=user ? user.gender === 'male': false) Homme
+                    option(value='female' selected=user ? user.gender === 'female': false) Femme
+            label(for='category')
+                span * Catégorie : 
+                select(id='category', name='category')
+                    option(value='Marketing' selected=user ? user.category === 'Marketing' : false) Marketing
+                    option(value='Client' selected=user ? user.category === 'Client' : false) Client
+                    option(value='Technique' selected=user ? user.category === 'Technique' : false) Technique
+            label(for='lastname')
+                span * Nom :
+                input(type="text" id="lastname" name="lastname" value=user ? user.lastname : '')
+            label(for='firstname')
+                span * Prénom :
+                input(type="text" id="firstname" name="firstname" value=user ? user.firstname : '')
+            label(for='email')
+                span * Email :
+                input(type="email" id="email" name="email" value=user ? user.email : '')
+            label(for='password')
+                span * Mot de passe :
+                input(type="password" id="password" name="password" placeholder='min 6 caractères')
+            label(for='confirmPassword')
+                span * Confirmer le mot de passe :
+                input(type="password" id="confirmPassword" name="confirmPassword" placeholder='min 6 caractères')
+            label(for='phone')
+                span * Téléphone :
+                input(type="text" id="phone" name="phone" value=user ? user.phone : '')
+            label(for='birthdate')
+                span * Date de naissance :
+                input(type="date" id="birthdate" name="birthdate" value=user ? user.birthdate : '')
+            label(for='city')
+                span * Ville :
+                input(type="text" id="city" name="city" value=user ? user.city : '')
+            label(for='country')
+                span * Pays :
+                input(type="text" id="country" name="country" value=user ? user.country : '')
+            label(for='photo')
+                span * Url de la photo :
+                input(type="text" id="photo" name="photo" value=user ? user.photo : '')
+            button(type="submit").confirm-button Envoyer
