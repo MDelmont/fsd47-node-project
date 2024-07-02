@@ -145,6 +145,8 @@ const  postCreateUserControlleur = async (req,res) => {
  * @returns 
  */
 const getUpdateUserControlleur = async (req,res) => {
+    const title = 'Modifier mon profil';
+
     try {
         const userId = req.params.userId;
         const user = await UserModel.findOne({_id: userId}).lean();
@@ -154,12 +156,12 @@ const getUpdateUserControlleur = async (req,res) => {
             birthdate: utilsData.formatDateYYYYMMDD(user.birthdate)
         }
 
-        return res.render("user/form", { user: formattedUser, title:'Modifier mon profil', session: req.session, errors: req.flash('errors')});
+        return res.render("user/form", { user: formattedUser, title, session: req.session, errors: req.flash('errors')});
 
     } catch (error) {
         console.log(error);
         req.flash('errors', "Une erreur interne est survenu");
-        return res.render("user/form", { title:'Modifier mon profil', session: req.session, errors: req.flash('errors')});
+        return res.render("user/form", { title, session: req.session, errors: req.flash('errors')});
     }
 }
 
