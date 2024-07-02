@@ -290,12 +290,32 @@ const getDeleteUserControlleur = async (req,res) => {
   }
 }
 const getUCreateUserControlleur = async (req,res) =>{
-   // faire le rendu du pug
+
 }
 
 const getListUserControlleur = async (req,res) => {
-  const users = await UserModel.find()
-  res.render("user/list",{users,utilsData})
+
+
+  const {search,searchBy,category} = req.query
+
+  let filter = {};
+  if (search && searchBy) {
+
+    if (searchBy === 'name') {
+      filter.$or = [
+          { firstname: { $regex: search, $options: 'i' } },
+          { lastname: { $regex: search, $options: 'i' } }
+      ];
+    } else {
+        filter[searchBy] = { $regex: search, $options: 'i' };
+    }
+
+  }
+  if (category && category !== 'all') {
+      filter.category = category;
+  }
+  const users = await UserModel.find(filter)
+  res.render("user/list",{token: req.session.token,users,utilsData, historyData : {search,searchBy,category}})
 }
 
 export default  {
