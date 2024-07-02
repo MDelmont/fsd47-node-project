@@ -17,10 +17,10 @@
             p.secondary Anniversaire #{utilsData.formatBirthday(user.birthdate)}
 
             .action
-                if isAdmin
+                if session.isAdmin
                     button(type="button", onclick=`editUser('${user._id}')`) Éditer
                     button(type="button", onclick=`deleteUser('${user._id}','${user.firstname}','${user.lastname}')`) Supprimer
-
+                
 block scripts
     script.
         function editUser(userId) {

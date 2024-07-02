@@ -69,7 +69,6 @@ app.listen(APP_PORT, () => {
   console.log(`App listening at http://${APP_HOSTNAME}:${APP_PORT}`);
 });
 
-
 // ==================
 // Connect DataBase
 // ==================

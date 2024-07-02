@@ -7,31 +7,35 @@ html(lang="fr")
         link(rel="stylesheet", href="/style/card/card.css")
         link(rel="stylesheet", href="/style/menu/menu.css")
         link(rel="stylesheet", href="/style/listPage/listPage.css")
+        link(rel="stylesheet", href="/style/homePage/homePage.css")
         block scripts
 
         title Hello Express Pug App!
     body
 
-        .menu
-            if (token)
-                
-            if (!token)
+        .menu 
+            if (!session.token)
+                .empty
                 a.item(href="/auth/login")
-                    i.file.icon
+                    img(src="/image/login.svg", alt="Icone de connexion")
                     | Connexion
-            if (token)
+            if (session.token)
                 a.item(href="/home")
-                    i.file.icon
-                    | home
-                a.item(href="/user/profil")
-                    i.file.icon
-                    | Profil
+                    img(src="/image/structure.svg", alt="Icone de structure")
+                    | Intranet
                 a.item(href="/user/list")
-                    i.file.icon
+                    img(src="/image/list.svg", alt="Icone de list")
                     | list
-                a.item(href="/auth/logout")
-                    i.file.icon
+                if session.isAdmin
+                    a.item(href="/user/create")
+                        img(src="/image/user.svg", alt="Icone d'ajout")
+                        | Ajouter
+                a.profil(href=`/user/update/${session.activeUser._id}`)
+                    img(src=session.activeUser.photo)
+                a.item(href="/auth/logout" , alt="Photo de profil")
+                    img(src="/image/logout.svg", alt="Icone de déconnexion")
                     | Déconnexion
+                
                 
         
         block content

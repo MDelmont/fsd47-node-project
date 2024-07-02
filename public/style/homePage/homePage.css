@@ -1,0 +1,10 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 90%;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=homePage.css.map */

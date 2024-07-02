@@ -1,5 +1,23 @@
 .menu{
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
+    .item{
+        display: flex;
+        gap: 3px;
+        align-items: center;
+        text-decoration: none;
+        font-weight: bolder;
+        color: black;
+        img{
+            height: 20px;
+        }
+    }
+    .profil{
+        img{
+            height: 40px;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+        }
+    }
 }
