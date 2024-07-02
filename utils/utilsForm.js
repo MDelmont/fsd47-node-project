@@ -41,7 +41,7 @@ const checkPasswordCondition = async (password,password2) => {
  */
   const checkGenderValue = async (gender) => {
     let errors = [];
-    // Check if the passwords match
+    // Check the gender value
     if (!['male', 'female'].includes(gender)) {
       errors.push({ msg: "Le genre doit être homme ou femme." });
     }
@@ -49,14 +49,14 @@ const checkPasswordCondition = async (password,password2) => {
 }
 
   /**
- * Check if the categorie is good value
- * @param {string} categorie 
+ * Check if the category is good value
+ * @param {string} category 
  */
-  const checkCategoryValue = async (categorie) => {
+  const checkCategoryValue = async (category) => {
     let errors = [];
-    // Check if the passwords match
-    if (!['Marketing', 'Client', 'Technique'].includes(categorie)) {
-      errors.push({ msg: "Le genre doit être homme ou femme." });
+    // Check the category value
+    if (!['marketing', 'client', 'technique'].includes(category)) {
+      errors.push({ msg: "La catégorie doit être Marketing, client ou technique." });
     }
     return errors
 }
