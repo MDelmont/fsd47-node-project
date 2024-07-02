@@ -11,8 +11,6 @@ const authMiddleware = (req, res, next) => {
   const token = req.session.token;
   // Check if there is a token
   if (!token) {
-
-    req.flash('errors', "Veuillez vous connecter");
     return res.redirect("auth/login");
   }
 

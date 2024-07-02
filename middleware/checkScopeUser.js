@@ -11,7 +11,7 @@ const checkScopeUser = async (req, res, next) => {
     // Check if there is a token
     if (userId != userModifyId) {
 
-        req.flash('errors', "Veuillez vous connecter");
+        req.flash('errors', "Vous n'avez pas acces à cette modification");
         return res.render("user/create", { token: req.session.token, errors: req.flash('errors') });
     }
 
