@@ -63,9 +63,9 @@ const  postCreateUserControlleur = async (req,res) => {
       }
 
       // check category
-      const errorsCategorie = await utilsForm.checkCategoryValue(category)
-      if (errorsCategorie.length > 0) {
-        for (let error of errorsCategorie){
+      const errorsCategory = await utilsForm.checkCategoryValue(category)
+      if (errorsCategory.length > 0) {
+        for (let error of errorsCategory){
           req.flash('errors', error.msg);
         }
         return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
@@ -146,7 +146,23 @@ const  postCreateUserControlleur = async (req,res) => {
  * @returns 
  */
 const getUpdateUserControlleur = async (req,res) => {
-  return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
+    try {
+        const userId = req.params.userId;
+        const user = await UserModel.findById(userId);
+
+        const formattedUser = {
+            ...user,
+            birthdate: utilsData.formatDateYYYYMMDD(user.birthdate)
+        }
+
+        console.log('formatted user = ', formattedUser);
+        return res.render("user/form", { url: `/user/update/${userId}`, user: formattedUser, title:'Modifier mon profil', btnText:'Modifier', token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
+
+    } catch (error) {
+        console.log(error);
+        req.flash('errors', "Une erreur interne est survenu");
+        return res.render("user/form", {title:'Modifier mon profil', token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
+    }
 }
 
 /**
@@ -197,9 +213,9 @@ const  postUpdateUserControlleur = async (req,res) => {
     }
 
     // check category
-    const errorsCategorie = await utilsForm.checkCategoryValue(category)
-    if (errorsCategorie.length > 0) {
-    for (let error of errorsCategorie){
+    const errorsCategory = await utilsForm.checkCategoryValue(category)
+    if (errorsCategory.length > 0) {
+    for (let error of errorsCategory){
     req.flash('errors', error.msg);
     }
     return res.render("user/create", { token: req.session.token, errors: req.flash('errors') ,informationHistory :req.body});
