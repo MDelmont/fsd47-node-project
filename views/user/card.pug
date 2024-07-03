@@ -1,4 +1,4 @@
-.card
+.card(data-name=`${user.firstname}${user.lastname}` data-localisation=`${user.city}${user.country}` data-category=user.category)
     if user.category =='Marketing'
         .category.marketing=user.category
     if user.category =='Client'

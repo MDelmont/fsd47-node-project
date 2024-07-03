@@ -307,29 +307,8 @@ const getDeleteUserControlleur = async (req,res) => {
 }
 
 const getListUserControlleur = async (req,res) => {
-  const {search,searchBy,category} = req.query
-  let filter = {};
-  if (search && searchBy) {
-    if (searchBy === 'name') {
-      filter.$or = [
-          { firstname: { $regex: search, $options: 'i' } },
-          { lastname: { $regex: search, $options: 'i' } }
-      ];
-    } else if (searchBy==='localisation'){
-        filter.$or = [
-          { city: { $regex: search, $options: 'i' } },
-          { country: { $regex: search, $options: 'i' } }
-      ];
-        
-    } else {
-      filter[searchBy] = { $regex: search, $options: 'i' };
-    }
-  }
-  if (category && category !== 'all') {
-      filter.category = category;
-  }
-  const users = await UserModel.find(filter)
-  res.render("user/list",{session: req.session, users,utilsData, historyData : {search,searchBy,category}})
+  const users = await UserModel.find()
+  res.render("user/list",{session: req.session, users,utilsData})
 }
 
 export default  {

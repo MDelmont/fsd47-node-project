@@ -8,24 +8,29 @@ const userSchema = new mongoose.Schema({
 
   firstname: { 
     type: String, 
-    required: true },  
+    required: true,
+    maxlength: 50},  
 
   lastname: { 
     type: String, 
-    required: true },  
+    required: true,
+    maxlength: 50},
 
   email: { 
     type: String, 
     required: true, 
-    unique: true },  
+    unique: true,
+    maxlength: 100}, 
 
   password: { 
     type: String, 
-    required: true },  
+    required: true,
+    maxlength: 100},  
 
   phone: { 
     type: String, 
-    required: true }, 
+    required: true,
+    maxlength: 20 }, 
 
   birthdate: { 
     type: Date, 
@@ -33,15 +38,18 @@ const userSchema = new mongoose.Schema({
 
   city: { 
     type: String, 
-    required: true }, 
+    required: true,
+    maxlength: 50 }, 
 
   country: { 
     type: String, 
-    required: true }, 
+    required: true,
+    maxlength: 50 }, 
 
   photo: { 
     type: String, 
-    required: true },  
+    required: true,
+    maxlength: 255 },  
 
   category: { 
     type: String, 
@@ -50,7 +58,7 @@ const userSchema = new mongoose.Schema({
 
   isAdmin: { 
     type: Boolean, 
-    default: true }  
+    default: false }  
 }, {
   timestamps: true,  // get 3 fields in database : "createdAt"; "updatedAt"; "__v";
 });

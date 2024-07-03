@@ -5,7 +5,6 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
-import passport from "passport";
 import session from "express-session"
 import flash from "connect-flash";
 // ====================
@@ -37,8 +36,6 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(flash());
 app.use((req, res, next) => {
