@@ -5,6 +5,7 @@
   justify-content: flex-start;
   gap: 20px;
   font-size: 1rem;
+  margin-bottom: 50px;
 }
 .login-page .form-login {
   display: flex;

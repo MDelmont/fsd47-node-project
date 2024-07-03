@@ -4,6 +4,7 @@
   align-items: center;
   gap: 25px;
   text-align: center;
+  margin-bottom: 50px;
 }
 .list-page .list-user {
   display: flex;

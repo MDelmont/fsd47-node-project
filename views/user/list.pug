@@ -6,22 +6,22 @@ block content
         h1 Liste des collaborateurs
 
         form(id="filterForm" action="" method="get")
-            input(type="text" placeholder="Recherche ..." name="search" value=historyData.search)
+            input(type="text" placeholder="Recherche ..." name="search")
             label(for="searchBy")
                 span Recherche par :
                 select(id="searchBy" name="searchBy")
-                    option(value="name", selected=historyData.searchBy === 'name') Nom
-                    option(value="localisation", selected=historyData.searchBy === 'localisation') Localisation
+                    option(value="name") Nom
+                    option(value="localisation") Localisation
             label(for="category")
                 span Catégorie :
                 select(id="category" name="category")
-                    option(value="all", selected=historyData.category === 'all') Tous
-                    option(value="Marketing", selected=historyData.category === 'Marketing') Marketing
-                    option(value="Technique", selected=historyData.category === 'Technique') Technique
-                    option(value="Client", selected=historyData.category === 'Client') Client
-            button.btn-edit(type="submit") Rechercher
+                    option(value="all") Tous
+                    option(value="Marketing") Marketing
+                    option(value="Technique") Technique
+                    option(value="Client") Client
 
         .list-user
             each user in users
                 include ./card.pug
 
+    script(src="/script/frontUpdate.js")

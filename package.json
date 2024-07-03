@@ -22,7 +22,6 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
-    "passport": "^0.7.0",
     "pug": "^3.0.2"
   },
   "type": "module"

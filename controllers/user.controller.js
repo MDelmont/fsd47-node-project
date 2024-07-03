@@ -132,8 +132,8 @@ const  postCreateUserControlleur = async (req,res) => {
       }
      
   }catch (error){
-  console.log(error);
-    req.flash('errors', "Une erreur interne est survenu");
+    console.log(error);
+    Object.values(error.errors).forEach(err =>  req.flash('errors',err.message));
     return res.render("user/form", {session: req.session, errors: req.flash('errors'),user :req.body, title});
   }
 }
@@ -179,7 +179,7 @@ const  postUpdateUserControlleur = async (req,res) => {
     const userModifyId = req.params.userId
     const title = userId == userModifyId ? 'Modifier mon profil' :  'Modifier le profil'
   try{
-
+    console.log('start update :',userModifyId)
     // check missing fields
     const requiredFields = [ 'gender','firstname',"lastname","email","phone","birthdate","city","country",
     "photo","category"];
@@ -279,9 +279,8 @@ const  postUpdateUserControlleur = async (req,res) => {
       res.render('user/form',{ title,session: req.session, success: req.flash('success'), user: {...req.body, _id: userModifyId}})
     }
   }catch (error){
-  console.log(error);
-    req.flash('errors', "Une erreur interne est survenu");
-        return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+    Object.values(error.errors).forEach(err =>  req.flash('errors',err.message));
+    return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});   
 }
 }
 
@@ -307,29 +306,8 @@ const getDeleteUserControlleur = async (req,res) => {
 }
 
 const getListUserControlleur = async (req,res) => {
-  const {search,searchBy,category} = req.query
-  let filter = {};
-  if (search && searchBy) {
-    if (searchBy === 'name') {
-      filter.$or = [
-          { firstname: { $regex: search, $options: 'i' } },
-          { lastname: { $regex: search, $options: 'i' } }
-      ];
-    } else if (searchBy==='localisation'){
-        filter.$or = [
-          { city: { $regex: search, $options: 'i' } },
-          { country: { $regex: search, $options: 'i' } }
-      ];
-        
-    } else {
-      filter[searchBy] = { $regex: search, $options: 'i' };
-    }
-  }
-  if (category && category !== 'all') {
-      filter.category = category;
-  }
-  const users = await UserModel.find(filter)
-  res.render("user/list",{session: req.session, users,utilsData, historyData : {search,searchBy,category}})
+  const users = await UserModel.find()
+  res.render("user/list",{session: req.session, users,utilsData})
 }
 
 export default  {
