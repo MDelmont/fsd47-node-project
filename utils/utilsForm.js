@@ -72,7 +72,7 @@ const checkPasswordCondition = async (password,password2) => {
     const phoneRegex = /^\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/
 
     if (!phoneRegex.test(phone)) {
-      errors.push({ msg: "Le numéro de téléphone n'est pas dans un format valide." });
+      errors.push({ msg: "Le numéro de téléphone n'est pas dans un format valide. format : XX-XX-XX-XX-XX" });
     }
     return errors
 }
