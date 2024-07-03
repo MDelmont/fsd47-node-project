@@ -52,4 +52,8 @@ block content
             label(for='photo')
                 span * Url de la photo :
                 input(type="text" id="photo" name="photo" value=user ? user.photo : '')
-            button(type="submit").confirm-button Envoyer
+            if session.isAdmin && title != "Modifier mon profil"
+                label(for='isAdmin')
+                    span Administrateur :
+                    input(type="checkbox" name='isAdmin', id='isAdmin' value=0 checked=user ? user.isAdmin : false)
+            button.btn-edit(type="submit") Envoyer

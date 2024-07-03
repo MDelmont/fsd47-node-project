@@ -116,7 +116,7 @@ const  postCreateUserControlleur = async (req,res) => {
         country,
         photo,
         category,
-        isAdmin
+        isAdmin : Boolean(isAdmin)
       });
       // save user in database
       const userSave = await newUser.save();
@@ -145,10 +145,12 @@ const  postCreateUserControlleur = async (req,res) => {
  * @returns 
  */
 const getUpdateUserControlleur = async (req,res) => {
-    const title = 'Modifier mon profil';
+    const userAuthId = req.auth.userId
+    const userId = req.params.userId;
+    const title = userId == userAuthId ? 'Modifier mon profil' :  'Modifier le profil'
 
     try {
-        const userId = req.params.userId;
+        
         const user = await UserModel.findOne({_id: userId}).lean();
 
         const formattedUser = {
@@ -174,7 +176,7 @@ const getUpdateUserControlleur = async (req,res) => {
 const  postUpdateUserControlleur = async (req,res) => {
     const userId = req.auth.userId
     const userModifyId = req.params.userId
-    const title = 'Modifier mon profil'
+    const title = userId == userModifyId ? 'Modifier mon profil' :  'Modifier le profil'
   try{
 
     // check missing fields
@@ -193,7 +195,6 @@ const  postUpdateUserControlleur = async (req,res) => {
     let {gender,firstname,lastname,email,password,
     confirmPassword,phone,birthdate,city,country,
     photo,category,isAdmin} = req.body;
-
     email = email.toLowerCase()
 
     if(password) {
@@ -269,11 +270,9 @@ const  postUpdateUserControlleur = async (req,res) => {
       existingUser.country = country;
       existingUser.photo = photo;
       existingUser.category = category;
-
-      if ( userAuth.isAdmin ){
-        existingUser.isAdmin = isAdmin;   
-      }
-     
+      if ( userAuth.isAdmin){
+        existingUser.isAdmin = Boolean(isAdmin);   
+      } 
       await existingUser.save();
       req.flash('success', "Modification réalisée avec succès !");
       res.render('user/form',{ title,session: req.session, success: req.flash('success'), user: {...req.body, _id: userModifyId}})
@@ -286,7 +285,6 @@ const  postUpdateUserControlleur = async (req,res) => {
 }
 
 const getHome = async (req,res) => {
-  console.log(req.session.isAdmin)
   try{
     const user =  await UserModel.aggregate([{ $sample: { size: 1 } }]);
     return res.render("user/home", { session: req.session, errors: req.flash('errors'),user : user[0],utilsData });
@@ -305,9 +303,6 @@ const getDeleteUserControlleur = async (req,res) => {
     console.log(error)
     res.redirect('/user/list')
   }
-}
-const getUCreateUserControlleur = async (req,res) =>{
-
 }
 
 const getListUserControlleur = async (req,res) => {
@@ -343,6 +338,5 @@ export default  {
   postUpdateUserControlleur,
   getHome,
   getDeleteUserControlleur,
-  getUCreateUserControlleur,
   getListUserControlleur
 }

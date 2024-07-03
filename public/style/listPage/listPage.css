@@ -2,14 +2,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 25px;
+  text-align: center;
 }
 .list-page .list-user {
   display: flex;
   width: 95%;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
   justify-content: center;
+}
+.list-page #filterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.list-page #filterForm label {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+@media screen and (min-width: 768px) {
+  .list-page #filterForm {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 /*# sourceMappingURL=listPage.css.map */

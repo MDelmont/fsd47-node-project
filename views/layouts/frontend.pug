@@ -9,6 +9,12 @@ html(lang="fr")
         link(rel="stylesheet", href="/style/listPage/listPage.css")
         link(rel="stylesheet", href="/style/homePage/homePage.css")
         link(rel="stylesheet", href="/style/formPage/formPage.css")
+        link(rel="stylesheet", href="/style/button/button.css")
+        link(rel="stylesheet", href="/style/loginPage/loginPage.css")
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin=true)
+        link(href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet")
+
         block scripts
 
         title Hello Express Pug App!
@@ -20,7 +26,7 @@ html(lang="fr")
                     i.file.icon
                     img(src="/image/structure.svg", alt="Icone de structure")
                     | Intranet
-                a.item(href="/auth/login")
+                a.item.btn-login(href="/auth/login")
                     img(src="/image/login.svg", alt="Icone de connexion")
                     | Connexion
             if (session.token)
@@ -30,14 +36,14 @@ html(lang="fr")
                     | Intranet
                 a.item(href="/user/list")
                     img(src="/image/list.svg", alt="Icone de list")
-                    | list
+                    | Liste
                 if session.isAdmin
                     a.item(href="/user/create")
                         img(src="/image/user.svg", alt="Icone d'ajout")
                         | Ajouter
                 a.profil(href=`/user/update/${session.activeUser._id}`)
                     img(src=session.activeUser.photo)
-                a.item(href="/auth/logout" , alt="Photo de profil")
+                a.item.btn-logout(href="/auth/logout" , alt="logo deconnexion")
                     img(src="/image/logout.svg", alt="Icone de déconnexion")
                     | Déconnexion
                 

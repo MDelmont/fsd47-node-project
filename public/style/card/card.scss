@@ -1,45 +1,77 @@
+$heightCard :120px;
 .card{
     position: relative;
-    width: 400px;
-    height: 160px;
-    border: 1px solid grey;
+    width: 98%;
+    height: $heightCard;
+    box-shadow: 4px 4px 6px -2px rgba(0, 0, 0, 0.3);
+    font-size: 0.6rem;
+    max-width: 450px;
     .category{
         position: absolute;
-   
         right: 0px;
         padding-right: 5px;
         text-align: left;
         top: 1px;
-      
+        font-weight: 600;
+        padding: 0px 5px;
+        &.technique{
+            color: #4272ac;
+            
+        }
+        &.client{
+           color: #268b66;
+        }
+        &.marketing{
+            color: #a34c79;
+        }
     }
+   
     .img-card-cont{
         position: absolute;
         top:0px;
         left: 0px;
         aspect-ratio: 1 / 1;
-        height: 160px;
+        height: $heightCard;
         overflow: hidden;
         img{
             width: 100%;
             height: 100%;
         }
     }
-
     .info-cont{
         position: absolute;
-        left: 175px;
-        width: 250px;
-        height: 150px;
-        top:20px;
-        
+        left: 130px;
+        height: 110px;
+        top:7px;
+        font-size: 1em;
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        justify-content: space-between;
+        gap: 0px;
         align-items: flex-start;
-        padding-top: 3px;
+        padding-top: 1px;
+
+        .btn-edit{
+            font-size: 1em ;
+        }
+        .btn-delete{
+            font-size: 1em ;
+        }
         .title-cont{
             display: flex;
-            gap : 4px;
+            gap : 3px;
+            
+        }
+        .txt-secondary{
+            color: grey;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .txt-primary{
+            color: #645bff;
+            text-align: center;
+            vertical-align: middle;
+            text-decoration: underline;
         }
         p,h3{
             margin: 0;
@@ -47,6 +79,28 @@
         .action{
             display: flex;
             gap: 5px;
+
         }
     }
+}
+
+@media screen and (min-width: 768px) {
+
+    $heightCard :180px;
+.card{
+    height: $heightCard;
+    font-size: 0.9rem;
+    .img-card-cont{
+        height: $heightCard;
+    }
+    .info-cont{
+        left: 200px;
+        height: 150px;
+        top:20px;
+        gap: 4px;
+        padding-top: 3px;
+  
+    }
+}
+
 }

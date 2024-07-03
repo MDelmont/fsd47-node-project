@@ -1,5 +1,10 @@
 .card
-    .category=user.category
+    if user.category =='Marketing'
+        .category.marketing=user.category
+    if user.category =='Client'
+        .category.client=user.category
+    if user.category =='Technique'
+        .category.technique=user.category
 
     .img-card-cont
         if user && user.photo
@@ -9,17 +14,17 @@
         .title-cont
             if user
                 h3 #{user.firstname} #{user.lastname}
-                p.secondary (#{utilsData.calculateAge(user.birthdate)} ans)
+                p.txt-secondary (#{utilsData.calculateAge(user.birthdate)} ans)
         p= `${user.city}, ${user.country}`
         if user
-            p #{user.email}
-            p #{user.phone}
-            p.secondary Anniversaire #{utilsData.formatBirthday(user.birthdate)}
+            p.txt-primary #{user.email}
+            p.txt-primary #{user.phone}
+            p.txt-secondary Anniversaire #{utilsData.formatBirthday(user.birthdate)}
 
             .action
                 if session.isAdmin
-                    button(type="button", onclick=`editUser('${user._id}')`) Éditer
-                    button(type="button", onclick=`deleteUser('${user._id}','${user.firstname}','${user.lastname}')`) Supprimer
+                    button.btn-edit(type="button", onclick=`editUser('${user._id}')`) Éditer
+                    button.btn-delete(type="button", onclick=`deleteUser('${user._id}','${user.firstname}','${user.lastname}')`) Supprimer
                 
 block scripts
     script.

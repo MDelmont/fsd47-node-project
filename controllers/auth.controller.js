@@ -48,7 +48,6 @@ const postLoginController = async (req,res) => {
     // put token in session
     req.session.token = token
     req.session.activeUser = {_id : user._id, photo: user.photo}
-    console.log('succes to login user', user._id)
     return res.redirect('/user/home')
   } catch (error) {
     // redirect to login page with errors
@@ -64,7 +63,6 @@ const postLoginController = async (req,res) => {
  * @param {*} res 
  */
 const getLoginController = async (req,res) => {
-  console.log(req.session.token)
   if(req.session.token){
     res.redirect('/user/home')
   }

@@ -1,3 +1,35 @@
+.btn-edit {
+  color: white;
+  background-color: #645bff;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 5px 15px;
+}
 
+.btn-delete {
+  background: transparent;
+  border: 0px;
+  color: red;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 5px 15px;
+}
+
+.btn-seconde-edit {
+  background: transparent;
+  border: 0px;
+  color: #645bff;
+  cursor: pointer;
+}
+
+.btn-logout {
+  color: #ff6d6d !important;
+}
+
+.btn-login {
+  color: #645bff !important;
+}
 
 /*# sourceMappingURL=button.css.map */
