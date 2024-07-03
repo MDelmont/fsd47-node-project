@@ -1,0 +1,11 @@
+.msg-error {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.msg-success {
+  color: #645bff;
+  font-size: 0.8rem;
+}
+
+/*# sourceMappingURL=message.css.map */

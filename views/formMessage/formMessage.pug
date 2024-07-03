@@ -1,0 +1,8 @@
+.msgs-form 
+    if errors && errors.length > 0
+        each error in errors
+            p.msg-error= error
+
+    if success && success.length > 0
+        each succes in success
+            p.msg-success= succes

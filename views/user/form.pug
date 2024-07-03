@@ -1,15 +1,11 @@
 extends ../layouts/frontend
-
+block title
+    title=title
 block content
     .form-page
         h1=title
-        if errors && errors.length > 0
-            each error in errors
-                p.ui.error.message= error
-
-        if success && success.length > 0
-            each succes in success
-                p.ui.success.message= succes
+        
+        include ../formMessage/formMessage.pug
         form(method="post")
             label(for='gender')
                 span * Civilité : 

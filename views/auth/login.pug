@@ -1,14 +1,10 @@
 extends ../layouts/frontend
-
+block title
+    title Connexion
 block content
     .login-page
         h1 Connexion
-        if errors && errors.length > 0
-            each error in errors
-                p.msg-error= error
-        if sucess && sucess.length > 0
-            each suces in sucess
-                p.msg-success= suces
+        include ../formMessage/formMessage.pug
         form.form-login(method="post", action="/auth/login")
             
             +field('email', 'email', 'Email')

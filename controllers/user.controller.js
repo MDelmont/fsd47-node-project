@@ -22,8 +22,9 @@ const getCreateUserControlleur  = async (req,res) => {
  * @returns 
  */
 const  postCreateUserControlleur = async (req,res) => {
+  const title = 'Ajouter un utilisateur';
   try{
-    
+   
     // check missing fields
     const requiredFields = [ 'gender','firstname',"lastname","email","password",
                               "confirmPassword","phone","birthdate","city","country",
@@ -33,7 +34,7 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let field of missingFields){
           req.flash('errors', `Le champs "${field}" est requis.`);
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,informationHistory :req.body});
+        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
       }
 
       let {gender,firstname,lastname,email,password,
@@ -49,7 +50,7 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let error of errors){
           req.flash('errors', error.msg);
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,informationHistory :req.body});
+        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
       }
 
       // check gender
@@ -58,7 +59,7 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let error of errorsGender){
           req.flash('errors', error.msg);
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,informationHistory :req.body});
+        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
       }
 
       // check category
@@ -67,7 +68,7 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let error of errorsCategory){
           req.flash('errors', error.msg);
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,informationHistory :req.body});
+        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
       }
 
       // check Phone
@@ -76,7 +77,7 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let error of errorsPhone){
           req.flash('errors', error.msg);
         }
-        return res.render("user/form", {session: req.session, errors: req.flash('errors') ,informationHistory :req.body});
+        return res.render("user/form", {session: req.session, errors: req.flash('errors') ,user :req.body, title});
       }
 
       // check birthdate
@@ -85,7 +86,7 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let error of errorsBirthdate){
           req.flash('errors', error.msg);
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors'),informationHistory :req.body });
+        return res.render("user/form", { session: req.session, errors: req.flash('errors'),user :req.body, title });
       }
 
       // check photo
@@ -94,14 +95,14 @@ const  postCreateUserControlleur = async (req,res) => {
         for (let error of errorsPhoto){
           req.flash('errors', error.msg);
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors'),informationHistory :req.body });
+        return res.render("user/form", { session: req.session, errors: req.flash('errors'),user :req.body, title });
       }
       // check if user exist
       const existingUser = await UserModel.findOne({ email });
       if (existingUser) {
 
         req.flash('errors', "Un utilisateur existe déjà avec cette adresse email.");
-        return res.render("user/form", { session: req.session, errors: req.flash('errors'),informationHistory :req.body});
+        return res.render("user/form", { session: req.session, errors: req.flash('errors'),user :req.body, title});
       }
       // create user with data
       const newUser = new UserModel({
@@ -127,13 +128,13 @@ const  postCreateUserControlleur = async (req,res) => {
       } else {
         // If mongoose error
         req.flash('errors', "Une erreur interne est survenu");
-        return res.render("user/form", { session: req.session, errors: req.flash('errors'),informationHistory :req.body});
+        return res.render("user/form", { session: req.session, errors: req.flash('errors'),user :req.body, title});
       }
      
   }catch (error){
   console.log(error);
     req.flash('errors', "Une erreur interne est survenu");
-    return res.render("user/form", {session: req.session, errors: req.flash('errors'),informationHistory :req.body});
+    return res.render("user/form", {session: req.session, errors: req.flash('errors'),user :req.body, title});
   }
 }
 
