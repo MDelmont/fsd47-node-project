@@ -53,50 +53,15 @@ const  postCreateUserControlleur = async (req,res) => {
         return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
       }
 
-      // check gender
-      const errorsGender = await utilsForm.checkGenderValue(gender)
-      if (errorsGender.length > 0) {
-        for (let error of errorsGender){
+      const errorUserData = await utilsForm.checkUserInformationData(req.body)
+
+      if (errorUserData.length >0){
+        for (let error of errorUserData){
           req.flash('errors', error.msg);
+          return  res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
         }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
       }
 
-      // check category
-      const errorsCategory = await utilsForm.checkCategoryValue(category)
-      if (errorsCategory.length > 0) {
-        for (let error of errorsCategory){
-          req.flash('errors', error.msg);
-        }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors') ,user :req.body,title});
-      }
-
-      // check Phone
-      const errorsPhone= await utilsForm.checkPhoneFormat(phone)
-      if (errorsPhone.length > 0) {
-        for (let error of errorsPhone){
-          req.flash('errors', error.msg);
-        }
-        return res.render("user/form", {session: req.session, errors: req.flash('errors') ,user :req.body, title});
-      }
-
-      // check birthdate
-      const errorsBirthdate= await utilsForm.checkDateFormat(birthdate)
-      if (errorsBirthdate.length > 0) {
-        for (let error of errorsBirthdate){
-          req.flash('errors', error.msg);
-        }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors'),user :req.body, title });
-      }
-
-      // check photo
-      const errorsPhoto= await utilsForm.checkUrlFormat(photo)
-      if (errorsPhoto.length > 0) {
-        for (let error of errorsPhoto){
-          req.flash('errors', error.msg);
-        }
-        return res.render("user/form", { session: req.session, errors: req.flash('errors'),user :req.body, title });
-      }
       // check if user exist
       const existingUser = await UserModel.findOne({ email });
       if (existingUser) {
@@ -133,7 +98,10 @@ const  postCreateUserControlleur = async (req,res) => {
      
   }catch (error){
     console.log(error);
-    Object.values(error.errors).forEach(err =>  req.flash('errors',err.message));
+    if (error){
+      Object.values(error.errors).forEach(err =>  req.flash('errors',err.message));
+    } 
+    
     return res.render("user/form", {session: req.session, errors: req.flash('errors'),user :req.body, title});
   }
 }
@@ -211,75 +179,50 @@ const  postUpdateUserControlleur = async (req,res) => {
         }
     }
 
-    // check gender
-    const errorsGender = await utilsForm.checkGenderValue(gender)
-    if (errorsGender.length > 0) {
-    for (let error of errorsGender){
-    req.flash('errors', error.msg);
-    }
-        return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
-}
+    const errorUserData = await utilsForm.checkUserInformationData(req.body)
 
-    // check category
-    const errorsCategory = await utilsForm.checkCategoryValue(category)
-    if (errorsCategory.length > 0) {
-    for (let error of errorsCategory){
-    req.flash('errors', error.msg);
-    }
-        return res.render(`user/form`, { title,session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
-}
-
-    // check Phone
-    const errorsPhone= await utilsForm.checkPhoneFormat(phone)
-    if (errorsPhone.length > 0) {
-    for (let error of errorsPhone){
-    req.flash('errors', error.msg);
-    }
+    if (errorUserData.length >0){
+      for (let error of errorUserData){
+        req.flash('errors', error.msg);
         return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
-}
-
-    // check birthdate
-    const errorsBirthdate= await utilsForm.checkDateFormat(birthdate)
-    if (errorsBirthdate.length > 0) {
-    for (let error of errorsBirthdate){
-    req.flash('errors', error.msg);
+      }
     }
-        return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
-}
-
-    // check photo
-    const errorsPhoto= await utilsForm.checkUrlFormat(photo)
-    if (errorsPhoto.length > 0) {
-    for (let error of errorsPhoto){
-    req.flash('errors', error.msg);
-    }
-        return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
-}
     const userAuth = await UserModel.findOne({ _id:userId });
     const existingUser = await UserModel.findOne({ email });
+    const userModify = await UserModel.findOne({ _id:userModifyId });
+    
 
-    if (existingUser) {
+    if (existingUser && existingUser._id.toString() != userModify._id.toString()){
+      req.flash('errors', "Un utilisateur existe déjà avec cette adresse email.");
+      return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});
+    }
+
+    
+    if (userModify) {
       // Update user fields with values from req.body
-      existingUser.gender = gender;
-      existingUser.firstname = firstname;
-      existingUser.lastname = lastname;
-      existingUser.email = email;
-      if(password) existingUser.password = password; // Assuming you handle password hashing
-      existingUser.phone = phone;
-      existingUser.birthdate = birthdate;
-      existingUser.city = city;
-      existingUser.country = country;
-      existingUser.photo = photo;
-      existingUser.category = category;
+      userModify.gender = gender;
+      userModify.firstname = firstname;
+      userModify.lastname = lastname;
+      userModify.email = email;
+      if(password) userModify.password = password; // Assuming you handle password hashing
+      userModify.phone = phone;
+      userModify.birthdate = birthdate;
+      userModify.city = city;
+      userModify.country = country;
+      userModify.photo = photo;
+      userModify.category = category;
       if ( userAuth.isAdmin){
-        existingUser.isAdmin = Boolean(isAdmin);   
+        userModify.isAdmin = Boolean(isAdmin);   
       } 
-      await existingUser.save();
+      await userModify.save();
       req.flash('success', "Modification réalisée avec succès !");
       res.render('user/form',{ title,session: req.session, success: req.flash('success'), user: {...req.body, _id: userModifyId}})
     }
   }catch (error){
-    Object.values(error.errors).forEach(err =>  req.flash('errors',err.message));
+    if (error){
+      Object.values(error.errors).forEach(err =>  req.flash('errors',err.message));
+    } 
+   
     return res.render(`user/form`, { title, session: req.session, errors: req.flash('errors') , user: {...req.body, _id: userModifyId}});   
 }
 }

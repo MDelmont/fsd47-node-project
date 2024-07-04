@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import UserModel from './models/User.model.js'; // Assurez-vous que le chemin est correct
-import { readFile } from 'fs/promises'; // Utilisation de fs.promises pour une utilisation asynchrone
+import { readFile } from 'fs/promises';
+import UserModel from "./models/User.model.js";
 dotenv.config();
 
 const { MONGO_URI } = process.env;
 
-// Fonction asynchrone pour charger les données et les insérer dans MongoDB
+// Function to load data and insert data in DB
 async function importUsers() {
     try {
         const data = await readFile('./data/users.json', 'utf8');
@@ -19,19 +19,16 @@ async function importUsers() {
     }
 }
 
-// Connexion à MongoDB et exécution de la fonction d'importation
+// Connect to Mongo and call the importUsers function
 mongoose.connect(MONGO_URI, {})
     .then(() => {
         console.log('Connexion à MongoDB réussie');
-        importUsers(); // Appeler la fonction d'importation une fois connecté à MongoDB
+        importUsers();
     })
     .catch(err => console.error('Erreur de connexion à MongoDB :', err));
 
 const app = express();
 app.use(express.json());
-// Autres configurations d'Express
-
-// Autres routes et configurations d'Express
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

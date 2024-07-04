@@ -28,8 +28,6 @@ const authMiddleware = (req, res, next) => {
   } catch (error) {
     console.error('Error in authMiddleware')
     console.error(error)
-
-    req.flash('errors', "Veuillez vous connecter");
     return res.redirect("auth/login");
   }
 };

@@ -117,13 +117,68 @@ const checkUrlFormat = async (urlStr) => {
 
   return errors;
 }
+
+/**
+ * Check email format
+ * @param {string} urlStr 
+ */
+const checkEmailFormat = async (email) => {
+  let errors = [];
+  // This regex allows URLs that start with http:// or https://
+  // and have any valid characters afterwards
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+  // Check if the URL string matches the expected format
+  if (!emailRegex.test(email)) {
+    errors.push({ msg: "L'adresse email n'est pas au bon format. format : exemple@exemple.ex" });
+  }
+
+  return errors;
+}
+
+/**
+ * 
+ * @param {*} object object data from user 
+ */
+const checkUserInformationData = async ({gender,email,
+                                          phone,birthdate,
+                                          photo,category}) => {
+  
+  const dataTocheck  = [
+     {value : gender,
+      checkFunction : checkGenderValue
+    },
+    {value : phone,
+      checkFunction : checkPhoneFormat
+    },
+    {value : birthdate,
+      checkFunction : checkDateFormat
+    },
+    {value : photo,
+      checkFunction : checkUrlFormat
+    },
+    {value : category,
+      checkFunction : checkCategoryValue
+    },
+    {value : email,
+      checkFunction : checkEmailFormat
+    },
+  ]
+
+   for (let data of dataTocheck){
+    if (data.value){
+      const error = await data.checkFunction(data.value)
+      if (error.length > 0) return error
+    }
+   }
+
+  return []
+
+}
+
 export default  {
   checkMissingField,
   checkPasswordCondition,
-  checkGenderValue,
-  checkPhoneFormat,
-  checkDateFormat,
-  checkUrlFormat,
-  checkCategoryValue,
+  checkUserInformationData
 }
 
